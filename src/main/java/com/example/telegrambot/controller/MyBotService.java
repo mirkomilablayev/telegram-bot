@@ -1,13 +1,19 @@
 package com.example.telegrambot.controller;
 
 import com.example.telegrambot.configuration.BotConfiguration;
+import com.example.telegrambot.dto.BookersDto;
 import com.example.telegrambot.entity.*;
 import com.example.telegrambot.exception.UserNotFoundException;
 import com.example.telegrambot.repository.*;
 import com.example.telegrambot.utils.Constant;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Paragraph;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.meta.api.methods.send.SendDocument;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
@@ -22,6 +28,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.Keyboard
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -222,6 +229,20 @@ public class MyBotService extends TelegramLongPollingBot {
             }
 
             if (text.equalsIgnoreCase("Kursga yozilganlar")) {
+                List<BookingToCourse> booking = bookingToCourseRepo.findAll();
+                PdfTicketMaker(booking);
+                File file = new File("src/main/resources/pdfList.pdf");
+                SendDocument sendDocument = new SendDocument();
+                sendDocument.setChatId(currentUser.getChatId());
+                sendDocument.setDocument(new InputFile(file));
+                sendDocument.setCaption("Bu yerda hamma kursga yozilganlar ro'yxati");
+                currentUser.setStatus(Constant.wrote_courses);
+                userRepository.save(currentUser);
+                try {
+                    execute(sendDocument);
+                } catch (TelegramApiException e) {
+                    e.printStackTrace();
+                }
 
             }
 
@@ -234,7 +255,6 @@ public class MyBotService extends TelegramLongPollingBot {
             e.printStackTrace();
         }
     }
-
 
 
     private String getStatistics() {
@@ -258,7 +278,6 @@ public class MyBotService extends TelegramLongPollingBot {
         row1.add(new KeyboardButton("Kursga yozilganlar"));
         KeyboardRow row3 = new KeyboardRow();
         row3.add(new KeyboardButton("User Panel"));
-        keyboardRowList.add(row1);
         keyboardRowList.add(row1);
         keyboardRowList.add(row3);
         markup.setKeyboard(keyboardRowList);
@@ -389,6 +408,61 @@ public class MyBotService extends TelegramLongPollingBot {
             return str.trim().isEmpty();
         else
             return false;
+    }
+
+
+    public void PdfTicketMaker(List<BookingToCourse> booking) {
+        try {
+            PdfWriter writer = new PdfWriter("src/main/resources/pdfList.pdf");
+            PdfDocument pdfDocument = new PdfDocument(writer);
+            pdfDocument.addNewPage();
+            List<BookersDto> bookersDtos = makeBookers(booking);
+            Document document = new Document(pdfDocument);
+            for (BookersDto bookersDto : bookersDtos) {
+                document.add(new Paragraph(bookersDto.getFullName()));
+                for (String cours : bookersDto.getCourses()) {
+                    document.add(new Paragraph(cours));
+                }
+                document.add(new Paragraph("---------------------"));
+            }
+            document.close();
+            System.out.println("PDF Created");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private List<BookersDto> makeBookers(List<BookingToCourse> booking) {
+        List<BookersDto> res = new ArrayList<>();
+        for (BookingToCourse item : booking) {
+            BookersDto bookersDto = new BookersDto();
+            boolean flag = false;
+            for (BookersDto re : res) {
+                if (re.getStudent_id().equals(item.getStudent().getId())) {
+                    flag = true;
+                    break;
+                }
+            }
+            if (!flag) {
+                bookersDto.setCourses(getCourses(booking, item.getStudent().getId()));
+                bookersDto.setFullName("Name - " + item.getStudent().getFistName() + ", Phone-" + item.getStudent().getPhoneNumber());
+                bookersDto.setStudent_id(item.getStudent().getId());
+                res.add(bookersDto);
+            }
+        }
+        return res;
+    }
+
+    private List<String> getCourses(List<BookingToCourse> booking, Long id) {
+        List<String> course = new ArrayList<>();
+        for (BookingToCourse i : booking) {
+            if (i.getStudent().getId().equals(id)) {
+                String str = "";
+                str = str + i.getCourse().getCourseName();
+                course.add(str);
+            }
+        }
+        return course;
     }
 
 

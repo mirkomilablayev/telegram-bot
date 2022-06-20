@@ -12,4 +12,5 @@ public interface Constant {
 
     String admin_main_menu = "admin_main_menu";
     String admin_statistic = "admin_statistic";
+    String wrote_courses = "wrote_courses";
 }
