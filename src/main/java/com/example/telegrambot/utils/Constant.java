@@ -1,5 +1,7 @@
 package com.example.telegrambot.utils;
 
+import java.util.Scanner;
+
 public interface Constant {
     String admin = "ADMIN";
     String user = "USER";
