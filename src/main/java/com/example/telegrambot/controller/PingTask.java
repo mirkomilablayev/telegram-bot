@@ -24,7 +24,7 @@ public class PingTask {
     public void pingMe() {
         System.out.println(url1);
         try {
-            URL url = new URL("https://www.google.com");
+            URL url = new URL(url1);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.connect();
             log.info("Ping {},OK: response code{}", url.getHost(), connection.getResponseCode());
