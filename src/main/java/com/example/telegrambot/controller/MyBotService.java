@@ -221,6 +221,10 @@ public class MyBotService extends TelegramLongPollingBot {
                 currentUser = userRepository.save(currentUser);
             }
 
+            if (text.equalsIgnoreCase("Kursga yozilganlar")) {
+
+            }
+
         }
         try {
             if (!isBlank(sendMessage.getText())) {
@@ -250,14 +254,12 @@ public class MyBotService extends TelegramLongPollingBot {
         markup.setResizeKeyboard(true);
         List<KeyboardRow> keyboardRowList = new ArrayList<>();
         KeyboardRow row1 = new KeyboardRow();
-        row1.add(new KeyboardButton("Kursga ro'yxatdan o'tganlar"));
-        KeyboardRow row2 = new KeyboardRow();
-        row2.add(new KeyboardButton("Statistika"));
-        row2.add(new KeyboardButton("Kursga yozilganlar"));
+        row1.add(new KeyboardButton("Statistika"));
+        row1.add(new KeyboardButton("Kursga yozilganlar"));
         KeyboardRow row3 = new KeyboardRow();
         row3.add(new KeyboardButton("User Panel"));
         keyboardRowList.add(row1);
-        keyboardRowList.add(row2);
+        keyboardRowList.add(row1);
         keyboardRowList.add(row3);
         markup.setKeyboard(keyboardRowList);
         return markup;

@@ -41,34 +41,32 @@ public class DataLoader implements CommandLineRunner {
         if (ddl.equalsIgnoreCase("create")
                 || ddl.equalsIgnoreCase("create-drop")){
 
-            courseRepo.save(new Course("Foundation","src/main/resources/img.png","" +
+            courseRepo.save(new Course("Foundation","src/main/resources/Foundation.png","" +
                     "Foundation kursi asosan dasturlashga endi kirgan " +
                     "o'quvchilar uchun mo'ljallangan bo'lib uning davomiyligi 3 oydir, " +
                     "Foundation kursida biz ko'plab tillarning otasi bo'lmish C++ dasturlash tilidan foydalanamiz"));
 
-            courseRepo.save(new Course("Java Backend","src/main/resources/img.png"
+            courseRepo.save(new Course("Java Backend","src/main/resources/Java.png"
                     ,"Java Backend yunalishi 7 oy davom etadi"));
 
-            courseRepo.save(new Course("Frontend","src/main/resources/img.png"
+            courseRepo.save(new Course("Frontend","src/main/resources/Frontend.png"
                     ,"Frontend haqida"));
 
-            courseRepo.save(new Course("Python Backend","src/main/resources/img.png"
+            courseRepo.save(new Course("Python Backend","src/main/resources/Python.png"
                     ,"Python backend"));
 
-            courseRepo.save(new Course("Android","src/main/resources/img.png"
+            courseRepo.save(new Course("Android","src/main/resources/Android.png"
                     ,"Android haqida"));
 
-            courseRepo.save(new Course("Grafik Dizayn","src/main/resources/img.png"
+            courseRepo.save(new Course("Grafik Dizayn","src/main/resources/Grafik.png"
                     ,"Grafik dizayn haqida"));
 
 
-            courseRepo.save(new Course("UX/UI Dezayn","src/main/resources/img.png"
+            courseRepo.save(new Course("UX/UI Dezayn","src/main/resources/ux_ui.png"
                     ,"Web dezayn haqida"));
 
-            courseRepo.save(new Course("Flutter","src/main/resources/img.png"
-                    ,"Flutter haqida"));
 
-            courseRepo.save(new Course("SMM","src/main/resources/img.png"
+            courseRepo.save(new Course("SMM","src/main/resources/Java.png"
                     ,"SMM Haqida"));
 
             linkRepo.save(new Link("https://www.instagram.com/rakhmonovitschool/","Instagram"));

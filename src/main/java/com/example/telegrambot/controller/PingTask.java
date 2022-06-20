@@ -17,11 +17,12 @@ import java.net.URL;
 @Getter
 public class PingTask {
 
-    @Value("pingtask.url")
+    @Value("${pingtask.url}")
     private String url1;
 
     @Scheduled(fixedRate = 1000 * 50)
     public void pingMe() {
+        System.out.println(url1);
         try {
             URL url = new URL("https://www.google.com");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
