@@ -432,6 +432,7 @@ public class MyBotService extends TelegramLongPollingBot {
         }
     }
 
+
     private List<BookersDto> makeBookers(List<BookingToCourse> booking) {
         List<BookersDto> res = new ArrayList<>();
         for (BookingToCourse item : booking) {
@@ -462,6 +463,7 @@ public class MyBotService extends TelegramLongPollingBot {
                 course.add(str);
             }
         }
+
         return course;
     }
 
