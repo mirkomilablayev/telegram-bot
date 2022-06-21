@@ -20,7 +20,7 @@ public class PingTask {
     @Value("${pingtask.url}")
     private String url1;
 
-    @Scheduled(fixedRate = 1000 * 50)
+    @Scheduled(fixedRate = 1000 * 30)
     public void pingMe() {
         System.out.println(url1);
         try {
