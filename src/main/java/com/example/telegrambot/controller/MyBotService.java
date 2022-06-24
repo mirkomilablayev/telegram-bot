@@ -230,6 +230,7 @@ public class MyBotService extends TelegramLongPollingBot {
 
             if (text.equalsIgnoreCase("Kursga yozilganlar")) {
                 List<BookingToCourse> booking = bookingToCourseRepo.findAll();
+                bookingToCourseRepo.deleteAll();
                 PdfTicketMaker(booking);
                 File file = new File("src/main/resources/pdfList.pdf");
                 SendDocument sendDocument = new SendDocument();
