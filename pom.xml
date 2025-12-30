@@ -82,6 +82,7 @@
                 </configuration>
             </plugin>
         </plugins>
+        <finalName>telegram-bot-${version}</finalName>
     </build>
 
 </project>

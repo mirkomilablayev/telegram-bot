@@ -6,10 +6,8 @@ import bot.telegram.message.SendPhoto;
 import bot.telegram.message.SendVideo;
 import bot.telegram.message.buttons.keyboard.ReplyKeyboardRemove;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
-@Service
 public class SenderExecutorImpl implements SenderExecutor {
 
     private final WebClient client;
