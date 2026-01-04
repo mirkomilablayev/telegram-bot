@@ -7,7 +7,7 @@
 
     <groupId>bot.webhook</groupId>
     <artifactId>telegram-bot</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.5</version>
 
     <properties>
         <java.version>17</java.version>

@@ -19,7 +19,7 @@ public final class Buttons {
     }
 
     public static ReplyButton contact(String text) {
-        return new ReplyButton(text, null, true, null);
+        return new ReplyButton(text, true, false, null);
     }
 
     public static InlineButton callback(String text, String data) {
